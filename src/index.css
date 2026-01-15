@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import './styles/design-tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========== GLOBAL STYLES ========== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-primary);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-primary);
+    line-height: var(--line-height-normal);
+}
+
+/* ========== CUSTOM UTILITY CLASSES ========== */
+
+.container-custom {
+    width: 100%;
+    max-width: var(--container-xl);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+}
+
+@media (min-width: 768px) {
+    .container-custom {
+        padding-left: var(--space-6);
+        padding-right: var(--space-6);
+    }
+}
+
+@media (min-width: 1024px) {
+    .container-custom {
+        padding-left: var(--space-8);
+        padding-right: var(--space-8);
+    }
+}
+
+/* Gradient Backgrounds */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--color-primary-400) 0%, var(--color-primary-600) 100%);
+}
+
+.bg-gradient-secondary {
+    background: linear-gradient(135deg, var(--color-secondary-700) 0%, var(--color-secondary-900) 100%);
+}
+
+.bg-gradient-hero {
+    background: linear-gradient(135deg, var(--color-brand-navy) 0%, var(--color-secondary-800) 50%, var(--color-brand-navy) 100%);
+}
+
+/* Text Gradients */
+.text-gradient-primary {
+    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-700) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Glassmorphism */
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Smooth Transitions */
+.transition-smooth {
+    transition: all var(--transition-base);
+}
+
+.transition-fast {
+    transition: all var(--transition-fast);
+}
+
+.transition-slow {
+    transition: all var(--transition-slow);
+}
+
+/* Hover Effects */
+.hover-lift {
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.hover-scale {
+    transition: transform var(--transition-base);
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* Focus Styles */
+.focus-ring {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.focus-ring:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-neutral-100);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-neutral-400);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-neutral-500);
+}
+
+/* Loading Animation */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn var(--transition-base) ease-in;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-up {
+    animation: slideUp var(--transition-slow) ease-out;
+}
+
+/* Badge Styles */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-full);
+}
+
+.badge-live {
+    background-color: var(--color-error-500);
+    color: white;
+}
+
+.badge-success {
+    background-color: var(--color-success-500);
+    color: white;
+}
+
+.badge-warning {
+    background-color: var(--color-warning-500);
+    color: white;
+}
+
+.badge-info {
+    background-color: var(--color-info-500);
+    color: white;
+}
+
+/* Card Styles */
+.card {
+    background: var(--color-bg-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border-light);
+    transition: all var(--transition-base);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+/* Typography Utilities */
+.heading-1 {
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-tight);
+}
+
+.heading-2 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+}
+
+.heading-3 {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+}
+
+.heading-4 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-normal);
+}
+
+.heading-5 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-normal);
+}
+
+.heading-6 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-normal);
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+    .heading-1 {
+        font-size: var(--font-size-4xl);
+    }
+
+    .heading-2 {
+        font-size: var(--font-size-3xl);
+    }
+
+    .heading-3 {
+        font-size: var(--font-size-2xl);
+    }
+}
