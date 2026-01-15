@@ -1,62 +1,59 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 
-/**
- * Tabs Component
- * 
- * Tab navigation with smooth animations.
- */
-
-const Tabs = ({ tabs, defaultTab = 0, onChange, className = '' }) => {
-    const [activeTab, setActiveTab] = useState(defaultTab);
-
-    const handleTabClick = (index) => {
-        setActiveTab(index);
-        if (onChange) {
-            onChange(index);
-        }
-    };
+export const Tabs = ({ children, defaultValue, className = '' }) => {
+    const [activeTab, setActiveTab] = useState(defaultValue);
 
     return (
         <div className={className}>
-            {/* Tab Headers */}
-            <div className="flex border-b border-neutral-200">
-                {tabs.map((tab, index) => (
-                    <button
-                        key={index}
-                        onClick={() => handleTabClick(index)}
-                        className={`
-              relative px-6 py-3 font-medium transition-colors
-              ${activeTab === index
-                                ? 'text-primary-600'
-                                : 'text-neutral-600 hover:text-neutral-900'
-                            }
-            `}
-                    >
-                        {tab.label}
+            {React.Children.map(children, child => {
+                if (child.type === TabsList) {
+                    return React.cloneElement(child, { activeTab, setActiveTab });
+                }
+                if (child.type === TabsContent) {
+                    return React.cloneElement(child, { activeTab });
+                }
+                return child;
+            })}
+        </div>
+    );
+};
 
-                        {activeTab === index && (
-                            <motion.div
-                                layoutId="activeTab"
-                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-500"
-                                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                            />
-                        )}
-                    </button>
-                ))}
-            </div>
+export const TabsList = ({ children, activeTab, setActiveTab, className = '' }) => {
+    return (
+        <div className={`flex gap-1 border-b border-gray-200 mb-6 ${className}`}>
+            {React.Children.map(children, child =>
+                React.cloneElement(child, { activeTab, setActiveTab })
+            )}
+        </div>
+    );
+};
 
-            {/* Tab Content */}
-            <div className="mt-4">
-                <motion.div
-                    key={activeTab}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2 }}
-                >
-                    {tabs[activeTab].content}
-                </motion.div>
-            </div>
+export const TabsTrigger = ({ value, children, activeTab, setActiveTab, className = '' }) => {
+    const isActive = activeTab === value;
+
+    return (
+        <button
+            onClick={() => setActiveTab(value)}
+            className={`
+        px-4 py-2.5 font-medium text-sm transition-all duration-200 border-b-2
+        ${isActive
+                    ? 'border-yellow-500 text-yellow-600'
+                    : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
+                }
+        ${className}
+      `}
+        >
+            {children}
+        </button>
+    );
+};
+
+export const TabsContent = ({ value, children, activeTab, className = '' }) => {
+    if (activeTab !== value) return null;
+
+    return (
+        <div className={`animate-fade-in ${className}`}>
+            {children}
         </div>
     );
 };

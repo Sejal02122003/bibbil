@@ -1,49 +1,53 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-// Pages
+// Public Pages
 import Landing from './pages/Landing';
-import SignUp from './pages/onboarding/SignUp';
-import Overview from './pages/dashboard/Overview';
-import Payments from './pages/dashboard/Payments';
-import Orders from './pages/dashboard/Orders';
-import Marketplace from './pages/dashboard/Marketplace';
-import Auctions from './pages/dashboard/Auctions';
-import LiveStream from './pages/dashboard/LiveStream';
-import Analytics from './pages/dashboard/Analytics';
 
-// Styles
-import './index.css';
+// Onboarding Pages
+import SignUp from './pages/onboarding/SignUp';
+import Verification from './pages/onboarding/Verification';
+import ProfileSetup from './pages/onboarding/ProfileSetup';
+import Welcome from './pages/onboarding/Welcome';
+
+// Dashboard Pages
+import Overview from './pages/dashboard/Overview';
+import Analytics from './pages/dashboard/Analytics';
+import Orders from './pages/dashboard/Orders';
+import Payments from './pages/dashboard/Payments';
+
+import './App.css';
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Landing />} />
+
+        {/* Onboarding Routes */}
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<SignUp />} /> {/* Reusing SignUp for now */}
+        <Route path="/onboarding/verification" element={<Verification />} />
+        <Route path="/onboarding/profile-setup" element={<ProfileSetup />} />
+        <Route path="/onboarding/welcome" element={<Welcome />} />
 
         {/* Dashboard Routes */}
         <Route path="/dashboard" element={<Overview />} />
-        <Route path="/dashboard/livestream" element={<LiveStream />} />
-        <Route path="/dashboard/auctions" element={<Auctions />} />
-        <Route path="/dashboard/marketplace" element={<Marketplace />} />
-        <Route path="/dashboard/payments" element={<Payments />} />
-        <Route path="/dashboard/orders" element={<Orders />} />
         <Route path="/dashboard/analytics" element={<Analytics />} />
-        <Route path="/dashboard/community" element={<Overview />} /> {/* TODO */}
-        <Route path="/dashboard/settings" element={<Overview />} /> {/* TODO */}
+        <Route path="/dashboard/orders" element={<Orders />} />
+        <Route path="/dashboard/payments" element={<Payments />} />
 
-        {/* Onboarding Routes */}
-        <Route path="/onboarding/verification" element={<Overview />} /> {/* Placeholder */}
-        <Route path="/onboarding/profile" element={<Overview />} /> {/* Placeholder */}
-        <Route path="/onboarding/welcome" element={<Overview />} /> {/* Placeholder */}
+        {/* Placeholder routes for other dashboard pages */}
+        <Route path="/dashboard/live-stream" element={<Overview />} />
+        <Route path="/dashboard/auctions" element={<Overview />} />
+        <Route path="/dashboard/marketplace" element={<Overview />} />
+        <Route path="/dashboard/community" element={<Overview />} />
+        <Route path="/dashboard/settings" element={<Overview />} />
 
-        {/* Catch all */}
+        {/* Catch all - redirect to landing */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 

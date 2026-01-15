@@ -1,53 +1,46 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
-/**
- * Card Component
- * 
- * A flexible card container with optional header, body, and footer sections.
- * Supports hover effects and custom styling.
- */
-
-const Card = ({
+export const Card = ({
     children,
-    header,
-    footer,
     className = '',
-    hoverable = false,
-    onClick,
+    padding = 'md',
     ...props
 }) => {
-    const baseStyles = 'card';
-    const hoverStyles = hoverable ? 'cursor-pointer hover-lift' : '';
-
-    const cardClasses = `${baseStyles} ${hoverStyles} ${className}`.trim();
+    const paddings = {
+        none: '',
+        sm: 'p-4',
+        md: 'p-6',
+        lg: 'p-8',
+    };
 
     return (
-        <motion.div
-            className={cardClasses}
-            onClick={onClick}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+        <div
+            className={`bg-white rounded-2xl border border-gray-100 ${paddings[padding]} ${className}`}
             {...props}
         >
-            {header && (
-                <div className="px-6 py-4 border-b border-neutral-200">
-                    {header}
-                </div>
-            )}
-
-            <div className="px-6 py-4">
-                {children}
-            </div>
-
-            {footer && (
-                <div className="px-6 py-4 border-t border-neutral-200 bg-neutral-50 rounded-b-lg">
-                    {footer}
-                </div>
-            )}
-        </motion.div>
+            {children}
+        </div>
     );
 };
+
+export const CardHeader = ({ children, className = '' }) => (
+    <div className={`mb-4 ${className}`}>{children}</div>
+);
+
+export const CardTitle = ({ children, className = '' }) => (
+    <h3 className={`text-lg font-semibold text-gray-900 ${className}`}>{children}</h3>
+);
+
+export const CardDescription = ({ children, className = '' }) => (
+    <p className={`text-sm text-gray-500 mt-1 ${className}`}>{children}</p>
+);
+
+export const CardContent = ({ children, className = '' }) => (
+    <div className={className}>{children}</div>
+);
+
+export const CardFooter = ({ children, className = '' }) => (
+    <div className={`mt-4 pt-4 border-t border-gray-100 ${className}`}>{children}</div>
+);
 
 export default Card;

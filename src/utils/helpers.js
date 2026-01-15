@@ -1,4 +1,4 @@
-// Utility helper functions
+// Utility Helper Functions
 
 export const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
@@ -7,65 +7,51 @@ export const formatCurrency = (amount) => {
     }).format(amount);
 };
 
-export const formatDate = (dateString) => {
-    const date = new Date(dateString);
+export const formatDate = (date) => {
     return new Intl.DateTimeFormat('en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
-    }).format(date);
+    }).format(new Date(date));
 };
 
-export const formatDateTime = (dateString) => {
-    const date = new Date(dateString);
+export const formatDateTime = (date) => {
     return new Intl.DateTimeFormat('en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
-    }).format(date);
+    }).format(new Date(date));
 };
 
-export const formatNumber = (number) => {
-    return new Intl.NumberFormat('en-US').format(number);
+export const formatNumber = (num) => {
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + 'M';
+    }
+    if (num >= 1000) {
+        return (num / 1000).toFixed(1) + 'K';
+    }
+    return num.toString();
 };
 
-export const formatPercentage = (value) => {
-    return `${value.toFixed(1)}%`;
+export const formatTimeRemaining = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    if (hours > 0) {
+        return `${hours}h ${minutes}m`;
+    }
+    if (minutes > 0) {
+        return `${minutes}m ${secs}s`;
+    }
+    return `${secs}s`;
 };
 
-export const truncateText = (text, maxLength) => {
-    if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + '...';
-};
-
-export const getInitials = (name) => {
-    return name
-        .split(' ')
-        .map(word => word[0])
-        .join('')
-        .toUpperCase()
-        .substring(0, 2);
-};
-
-export const calculatePercentageChange = (current, previous) => {
-    if (previous === 0) return 0;
-    return ((current - previous) / previous) * 100;
-};
-
-export const getStatusColor = (status) => {
-    const colors = {
-        active: 'text-green-600 bg-green-100',
-        pending: 'text-yellow-600 bg-yellow-100',
-        shipped: 'text-blue-600 bg-blue-100',
-        delivered: 'text-green-600 bg-green-100',
-        cancelled: 'text-red-600 bg-red-100',
-        live: 'text-red-600 bg-red-100',
-        scheduled: 'text-blue-600 bg-blue-100',
-        ended: 'text-neutral-600 bg-neutral-100',
-    };
-    return colors[status] || 'text-neutral-600 bg-neutral-100';
+export const calculatePercentage = (value, total) => {
+    if (total === 0) return 0;
+    return ((value / total) * 100).toFixed(1);
 };
 
 export const validateEmail = (email) => {
@@ -74,9 +60,27 @@ export const validateEmail = (email) => {
 };
 
 export const validatePassword = (password) => {
-    return password.length >= 8;
+    // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
+    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
+    return re.test(password);
 };
 
-export const generateId = (prefix = 'id') => {
-    return `${prefix}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+export const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+};
+
+export const getStatusColor = (status) => {
+    const colors = {
+        active: 'success',
+        pending: 'warning',
+        completed: 'success',
+        delivered: 'success',
+        shipped: 'info',
+        cancelled: 'danger',
+        live: 'live',
+        scheduled: 'info',
+        ended: 'default',
+    };
+    return colors[status] || 'default';
 };
