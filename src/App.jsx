@@ -6,6 +6,7 @@ import Landing from './pages/Landing';
 
 // Onboarding Pages
 import SignUp from './pages/onboarding/SignUp';
+import SignIn from './pages/onboarding/SignIn';
 import Verification from './pages/onboarding/Verification';
 import ProfileSetup from './pages/onboarding/ProfileSetup';
 import Welcome from './pages/onboarding/Welcome';
@@ -27,6 +28,7 @@ function App() {
 
         {/* Onboarding Routes */}
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/onboarding/verification" element={<Verification />} />
         <Route path="/onboarding/profile-setup" element={<ProfileSetup />} />
         <Route path="/onboarding/welcome" element={<Welcome />} />
